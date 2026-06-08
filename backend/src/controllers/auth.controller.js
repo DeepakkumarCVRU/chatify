@@ -1,6 +1,8 @@
+import { sendWelcomeEmail } from "../emails/emailHandlers.js"
 import generateToken from "../lib/utils.js"
 import User from "../models/user.model.js"
 import bcrypt from "bcrypt"
+import "dotenv/config"
 
 export const singUp = async (req, res) => {
     const { fullName, email, password, confirmPassword } = req.body
@@ -37,8 +39,8 @@ export const singUp = async (req, res) => {
         })
 
         if (newUser) {
-            generateToken(newUser._id, res)   //this fuction is genereting a token 
-            await newUser.save()
+            const savedUser = await newUser.save()
+            generateToken(savedUser._id, res)   //this fuction is genereting a token 
 
             res.status(201).json({
                 _id: newUser._id,
@@ -47,6 +49,16 @@ export const singUp = async (req, res) => {
                 profilePic: newUser.profilePic,
                 message: "User created"
             })
+
+
+            try {
+                // await sendWelcomeEmail(savedUser.email, savedUser.fullName, process.env.CLIENT_URL)
+                await sendWelcomeEmail("dk6614235890@gmail.com", savedUser.fullName, process.env.CLIENT_URL)
+            } catch (error) {
+                console.log("Error in sending email", error)
+            }
+
+
         } else {
             res.status(400).json({ message: "User not created" })
         }
