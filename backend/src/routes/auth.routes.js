@@ -3,7 +3,7 @@ import { singUp } from "../controllers/auth.controller.js";
 
 const router = Router();
 
-router.get("/login", (req, res) => {
+router.get("/loginpage", (req, res) => {
     res.send("Login");
 });
 
