@@ -1,12 +1,11 @@
 import { Router } from "express";
-import { singUp } from "../controllers/auth.controller.js";
+import { Login, Logout, singUp } from "../controllers/auth.controller.js";
 
 const router = Router();
 
-router.get("/loginpage", (req, res) => {
-    res.send("Login");
-});
-
 router.post("/signup", singUp);
+
+router.post("/login", Login);
+router.post("/logout", Logout);
 
 export default router;

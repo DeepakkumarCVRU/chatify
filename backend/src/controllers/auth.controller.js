@@ -70,3 +70,43 @@ export const singUp = async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 }
+
+
+export const Login = async (req, res) => {
+    const { email, password } = req.body
+    try {
+        const user = await User.findOne({ email: email })
+        if (!user) {
+            return res.status(400).json({ message: "User not found" })
+        }
+        const isPasswordCorrect = await bcrypt.compare(password, user.password)
+        if (!isPasswordCorrect) {
+            return res.status(400).json({ message: "Invalid password" })
+        }
+
+        generateToken(user._id, res)
+
+        res.status(200).json({
+            _id: user._id,
+            fullName: user.fullName,
+            email: user.email,
+            profilePic: user.profilePic,
+            message: "User logged in"
+        })
+
+    } catch (error) {
+        console.log("Error in Login controller", error)
+        return res.status(500).json({ message: error.message })
+    }
+}
+
+
+export const Logout = async (req, res) => {
+    try {
+        res.cookie("token", "", { maxAge: 0 })
+        res.status(200).json({ message: "User logged out" })
+    } catch (error) {
+        console.log("Error in Logout controller", error)
+        res.status(500).json({ message: error.message })
+    }
+}
