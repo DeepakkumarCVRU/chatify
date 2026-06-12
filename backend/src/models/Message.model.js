@@ -13,6 +13,7 @@ const messageSchema = new mongoose.Schema({
     },
     text: {   // this is for message which send by sender to reciever
         type: String,
+        trim: true,
         maxLength: 500
     },
     image: {
