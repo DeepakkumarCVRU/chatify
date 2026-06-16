@@ -9,6 +9,6 @@ router.post("/signup", singUp);
 router.post("/login", Login);
 router.post("/logout", Logout);
 router.put("/updat-profile", protectedRoute, updateProfile);
-router.get("/check", protectedRoute, (req, res) => res.status(200).json({ message: "User is authenticated", Ok: req.user }));
+router.get("/check", protectedRoute, (req, res) => res.status(200).json({ message: "User is authenticated", user: req.user }));
 
 export default router;
