@@ -12,8 +12,13 @@ export const useAuthStore = create((set) => ({
 
     checkAuth: async () => {
         try {
-            const res = await axios.get("http://localhost:3000/api/auth/check")
-            set({ authUser: res.data })
+            const res = await axios.get("http://localhost:3000/api/auth/check", {
+                withCredentials: true,
+            })
+
+            console.log("this is req.data", res.data.user)
+
+            set({ authUser: res.data.user })
         } catch (error) {
             console.log("error in checkAuth", error)
             set({ authUser: null })
@@ -39,7 +44,6 @@ export const useAuthStore = create((set) => ({
         }
     },
 
-
     Login: async (data) => {
         set({ isLoginIn: true })
         try {
@@ -54,6 +58,17 @@ export const useAuthStore = create((set) => ({
             toast.error(error.response.data.message)
         } finally {
             set({ isLoginIn: false })
+        }
+    },
+
+    Logout: async () => {
+        try {
+            await axios.post("http://localhost:3000/api/auth/logout", { withCredentials: true });
+            set({ authUser: null })
+            toast.success("Logout successfully")
+        } catch (error) {
+            toast.error(error.response.data.message)
+            console.log("logOut error", error)
         }
     }
 
