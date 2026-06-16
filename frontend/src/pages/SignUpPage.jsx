@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore.js";
 import { TbMessageCircle } from "react-icons/tb";
 import { CiUser } from "react-icons/ci";
+import {Link} from "react-router-dom"
+import { LoaderIcon } from "react-hot-toast";
+import SignUpImage from "../assets/signup.png";
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -15,12 +18,13 @@ const SignUpPage = () => {
   const handleSignUp = (e) => {
     e.preventDefault();
     signUp(formData);
+    console.log(formData);
   };
 
   return (
     <>
-      <div className="w-full flex items-center justify-center p-4 bg-slate-900">
-        <div className="relative w-full max-w-6xl md:h-200 h-162.5">
+      <div className="w-full h-screen flex items-center justify-center p-4  bg-slate-900">
+        <div className="relative  w-full max-w-6xl md:h-200 h-162.5 flex">
           {/* first part */}
           <div className="w-1/2 border-r">
             <div className="">
@@ -96,11 +100,29 @@ const SignUpPage = () => {
                       </div>
                     </div>
                 </div>
-                <button  onClick={handleSignUp}>SingUp</button>
+                <button className="auth-btn" onClick={handleSignUp} disabled={isSigningUp}>
+                  {isSigningUp ? <LoaderIcon className="animate-spin" /> : "create account"}
+                </button>
+                <div className="mt-3 text-center">
+                  <Link to="/login" className="auth-link">Allready have an account ? Login</Link>
+                </div>
               </div>
             </div>
           </div>
-          <div></div>
+          {/* Form illustration - right side */}
+          <div className="hidden md:w-1/2 md:flex justify-center items-center ">
+            <div>
+              <img src={SignUpImage} alt="" className="w-full h-auto object-contain" />
+              <div className="mt-6 text-center">
+                        <h3 className="text-xl font-medium text-cyan-500">Start your journey</h3>
+                        <div className="mt-4 flex justify-center gap-4">
+                          <span className="auth-badge">Free</span>
+                          <span className="auth-badge">Private</span>
+                          <span className="auth-badge">Easy Satup</span>
+                        </div>
+              </div>
+              </div>
+          </div>
         </div>
       </div>
     </>
