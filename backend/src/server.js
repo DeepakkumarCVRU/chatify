@@ -20,7 +20,7 @@ app.use(cors({
 app.use(cookieParser())
 connectDB()
 app.use("/api/auth", router)
-app.use(messageRouter)
+app.use("/api", messageRouter)
 
 app.get("/", (req, res) => {
     res.send("Hello World")

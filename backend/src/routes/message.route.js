@@ -6,7 +6,7 @@ import { protectedRoute } from "../middleware/auth.middleware.js"
 const router = Router()
 router.use(protectedRoute)
 
-router.get("/contact", getAllContacts)
+router.get("/contacts", getAllContacts)
 router.get("/chats", getChatPartner)
 router.get("/:id", getMessageByUserId)
 router.post("/send/:id", sendMessages)
