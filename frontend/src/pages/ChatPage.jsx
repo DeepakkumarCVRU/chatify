@@ -9,6 +9,7 @@ import { useChatStore } from "../store/useChatStore.js"
 const ChatPage = () => {
 
   const {activeTab, selectedUser} = useChatStore();
+ 
 
   return (
     <>
@@ -25,7 +26,7 @@ const ChatPage = () => {
 
           {/* RIGHT SIDE */}
 
-          <div className="flex-1 flex flex-col bg-slate-700/50 backdrop-blur-sm">
+          <div className="flex-1 flex flex-col bg-slate-700/50 backdrop-blur-sm ">
 
           {selectedUser ? <ChatContainer/> : <NoConversationPlaceholder/>}
 

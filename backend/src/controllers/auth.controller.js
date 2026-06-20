@@ -41,7 +41,7 @@ export const singUp = async (req, res) => {
 
         if (newUser) {
             const savedUser = await newUser.save()
-            generateToken(savedUser._id, res)   //this fuction is genereting a token 
+            generateToken(savedUser._id, savedUser.fullName, res)   //this fuction is genereting a token 
 
             res.status(201).json({
                 _id: newUser._id,
@@ -85,7 +85,7 @@ export const Login = async (req, res) => {
             return res.status(400).json({ message: "Invalid password" })
         }
 
-        generateToken(user._id, res)
+        generateToken(user._id, user.fullName, res)
 
         res.status(200).json({
             _id: user._id,
@@ -120,6 +120,8 @@ export const updateProfile = async (req, res) => {
             return res.status(400).json({ message: "Profile pic is required" })
         }
 
+        console.log(profilePic)
+
         const userId = req.user;
 
         coudinary.uploader.upload(profilePic)
@@ -134,7 +136,7 @@ export const updateProfile = async (req, res) => {
             updatedUser
         })
 
-    } catch {
+    } catch (error) {
         console.log("Error in updateProfile controller", error)
         res.status(500).json({ message: error.message })
     }

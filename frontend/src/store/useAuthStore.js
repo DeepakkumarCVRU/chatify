@@ -10,15 +10,17 @@ export const useAuthStore = create((set) => ({
     isLoginIn: false,
 
 
+
     checkAuth: async () => {
         try {
             const res = await axios.get("http://localhost:3000/api/auth/check", {
                 withCredentials: true,
             })
 
-            console.log("this is req.data", res.data.user)
+            console.log("this is req.data", res.data.user, "this is user", res)
 
             set({ authUser: res.data.user })
+
         } catch (error) {
             console.log("error in checkAuth", error)
             set({ authUser: null })
@@ -71,5 +73,17 @@ export const useAuthStore = create((set) => ({
             console.log("logOut error", error)
         }
     }
+
+
+    ,
+    UpdatProfile: async (data) => {
+        try {
+            await axios.put("http://localhost:3000/api/auth/updat-profile", data, { withCredentials: true });
+        } catch (error) {
+            console.log(" update profile error", error)
+            toast.error(error.response.data.message)
+        }
+    }
+
 
 }))
