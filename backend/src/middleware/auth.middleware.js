@@ -7,6 +7,7 @@ export const protectedRoute = async (req, res, next) => {
 
     try {
         const token = req.cookies.token
+        console.log("this is token", token)
         if (!token) {
             return res.status(401).json({ message: "Unauthorized" })
         }
@@ -21,7 +22,6 @@ export const protectedRoute = async (req, res, next) => {
         }
 
         req.user = decoded
-        console.log("this is req.user", req.user)
         next()
     } catch (error) {
         console.log("Error in protectedRoute middleware", error)

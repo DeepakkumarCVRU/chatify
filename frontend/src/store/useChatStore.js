@@ -28,7 +28,7 @@ export const useChatStore = create((set, get) => ({
     getAllContacts: async () => {
         set({ isUserLoading: true })
         try {
-            const res = await axios.get("http://localhost:3000/api/contacts")
+            const res = await axios.get("http://localhost:3000/api/contacts", { withCredentials: true })
             set({ allContact: res.data })
         } catch (error) {
             toast.error(error.response.data.message)
@@ -40,9 +40,11 @@ export const useChatStore = create((set, get) => ({
     getChatPartner: async () => {
         set({ isUserLoading: true })
         try {
-            const res = await axios.get("http://localhost:3000/api/chats")
+            const res = await axios.get("http://localhost:3000/api/chats", { withCredentials: true })
+            console.log("this is res", res)
             set({ chats: res.data })
         } catch (error) {
+            console.log("error in getChatPartner", error)
             toast.error(error.response.data.message)
         } finally {
             set({ isUserLoading: false })

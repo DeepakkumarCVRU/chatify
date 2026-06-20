@@ -89,6 +89,7 @@ export const sendMessages = async (req, res) => {
 export const getChatPartner = async (req, res) => {
     try {
         const loggedInUser = req.user._id;
+
         //find all message where the loggedINUser is either sender or reciever
 
         const messages = await Message.find({
@@ -103,7 +104,7 @@ export const getChatPartner = async (req, res) => {
 
         const chatPartners = await User.find({ _id: { $in: chatPartner } }).select("-password");
 
-
+        console.log(chatPartners);
         res.status(200).json(chatPartners)
 
 

@@ -19,8 +19,8 @@ const ChatPage = () => {
             <ProfileHeader/>
             <ActiveTabSwitch/>
 
-            <div>
-              {activeTab === "chat" ? <ChatList/> : <ContactList/>}
+            <div className="  overflow-y-scroll">
+              {activeTab === "chats" ? <ChatList/> : <ContactList/>}
             </div>
           </div>
 
