@@ -72,10 +72,8 @@ export const useAuthStore = create((set) => ({
             toast.error(error.response.data.message)
             console.log("logOut error", error)
         }
-    }
+    },
 
-
-    ,
     UpdatProfile: async (data) => {
         try {
             await axios.put("http://localhost:3000/api/auth/updat-profile", data, { withCredentials: true });
